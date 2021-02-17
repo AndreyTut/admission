@@ -2,7 +2,6 @@ package com.study.my.command;
 
 import com.study.my.model.User;
 import com.study.my.service.UserService;
-import com.study.my.util.Constants;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -41,10 +40,10 @@ public class RegistrationCommand implements Command {
         try {
             Part filePart = request.getPart(FILE_NAME);
             if (filePart != null) {
-                InputStream fileContemt = filePart.getInputStream();
+                InputStream fileContent = filePart.getInputStream();
                 ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                while (fileContemt.available() > 0) {
-                    byteArrayOutputStream.write(fileContemt.read());
+                while (fileContent.available() > 0) {
+                    byteArrayOutputStream.write(fileContent.read());
                 }
                 byteArrayOutputStream.flush();
                 image = byteArrayOutputStream.toByteArray();

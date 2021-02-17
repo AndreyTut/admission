@@ -2,11 +2,10 @@ package com.study.my.dao;
 
 import com.study.my.model.Role;
 import com.study.my.model.User;
+import org.apache.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +14,7 @@ import static com.study.my.util.Constants.*;
 
 public class UserDaoImpl implements UserDao {
 
-
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
     private Connection connection;
 
@@ -51,6 +50,23 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public User findWithDiploma(Integer id) {
+
+        try (PreparedStatement statement = connection.prepareStatement(GET_STUDENT_WITH_DIPLOMA)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                User user = getUserFromResultSet(resultSet);
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
     public boolean create(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_WITH_ROLE)) {
             statement.setString(1, user.getEmail());
@@ -77,7 +93,19 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() {
-        return null;
+        try (Statement statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(GET_ALL_USERS_ROLES);
+            List<User> users = new ArrayList<>();
+            User user = getUserFromResultSet(resultSet);
+            while (user != null) {
+                users.add(user);
+                user = getUserFromResultSet(resultSet);
+            }
+            return users;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -117,4 +145,6 @@ public class UserDaoImpl implements UserDao {
         }
         return null;
     }
+
+//    private Diploma
 }

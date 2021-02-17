@@ -8,4 +8,6 @@ public interface UserDao extends GenericDao<User> {
     Optional<User> findByEmail(String email);
 
     Optional<User> findByEmailAndPassword(String email, String psw);
+
+    User findWithDiploma(Integer id);
 }

@@ -149,6 +149,10 @@ public class User {
         this.roles = roles;
     }
 
+    public String getFullName() {
+        return lastName + " " + firstName + " " + patronymic;
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }

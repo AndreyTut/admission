@@ -16,7 +16,16 @@ public class StudentListCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        List<User> students = userService.getAll();
+        String page = request.getParameter("page");
+        int pageNum = page == null ? 0 : Integer.parseInt(page);
+        List<User> allStudents = userService.getAll();
+
+        int studCount = allStudents.size();
+        int pagesCount = studCount % 10 == 0 ? studCount / 10 : studCount / 10 + 1;
+        List<User> students = allStudents.subList(pageNum * 10, pageNum == pagesCount - 1 ? studCount : pageNum * 10 + 10);
+        request.setAttribute("students", students);
+        request.setAttribute("pages", pagesCount);
+        request.setAttribute("page", pageNum);
         return "/WEB-INF/jsp/students.jsp";
     }
 }

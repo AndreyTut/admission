@@ -2,6 +2,7 @@ package com.study.my.servlet;
 
 import com.study.my.command.*;
 import com.study.my.service.UserService;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -19,6 +20,7 @@ public class Servlet extends HttpServlet {
 
     private UserService userService = new UserService();
     private Map<String, Command> commands = new HashMap<>();
+    Logger logger=Logger.getLogger(Servlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -32,6 +34,7 @@ public class Servlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        logger.debug("Servlet process get request "+httpServletRequest.getRequestURI());
         processRequest(httpServletRequest, httpServletResponse);
     }
 

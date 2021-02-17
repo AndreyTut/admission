@@ -38,7 +38,7 @@ public class LoginCommand implements Command {
         String password = request.getParameter(PASSWORD_FIELD);
 
         Optional<User> fromDb = userService.getLogged(email, password);
-        if (!fromDb.isPresent()) {
+        if (!fromDb.isPresent() || !fromDb.get().isEnabled()) {
             return "/WEB-INF/jsp/login.jsp";
         }
         User logUser = fromDb.get();

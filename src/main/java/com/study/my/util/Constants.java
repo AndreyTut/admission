@@ -24,5 +24,8 @@ public class Constants {
             "last_name, patronymic, city, region, school_name, diplom_image, enabled) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
             "returning id) INSERT INTO user_role (user_id, role) VALUES((select id from new_user), 'ROLE_USER')";
 
+    public static final String GET_ALL_USERS_ROLES = "SELECT u.*, ur.role FROM user_db u LEFT JOIN user_role ur ON ur.user_id=u.id";
+
+    public static final String GET_STUDENT_WITH_DIPLOMA = "SELECT u.*, d.* FROM user_db u LEFT JOIN diploma d ON d.user_id=u.id WHERE u.id=?";
 
 }
