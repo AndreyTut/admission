@@ -13,6 +13,12 @@ public class DaoFactory extends AbstractDaoFactory {
         return new UserDaoImpl(getConnection());
     }
 
+    @Override
+    public DiplomaDao createDiplomaDao() {
+        return new DiplomaDaoImpl(getConnection());
+    }
+
+
     private Connection getConnection() {
         try {
             return dataSource.getConnection();

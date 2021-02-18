@@ -6,6 +6,8 @@ public abstract class AbstractDaoFactory {
 
     public abstract UserDao createUserDao();
 
+    public abstract DiplomaDao createDiplomaDao();
+
     public static AbstractDaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (AbstractDaoFactory.class) {
@@ -17,5 +19,4 @@ public abstract class AbstractDaoFactory {
         }
         return daoFactory;
     }
-
 }

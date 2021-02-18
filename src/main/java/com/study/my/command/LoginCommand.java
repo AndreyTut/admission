@@ -49,11 +49,12 @@ public class LoginCommand implements Command {
         session.setAttribute("isAdmin", isAdmin);
         session.setAttribute("isUser", isUser);
 
-        return isAdmin
-                ? "/WEB-INF/jsp/admin.jsp"
-                : isUser
-                ? "/WEB-INF/jsp/user.jsp"
-                : "/WEB-INF/jsp/error.jsp";
+        return "redirect:/index.jsp";
+        //isAdmin
+//                ? "/WEB-INF/jsp/admin.jsp"
+//                : isUser
+//                ? "/WEB-INF/jsp/user.jsp"
+//                : "/WEB-INF/jsp/error.jsp";
     }
 
     private String checkUser(User user) {

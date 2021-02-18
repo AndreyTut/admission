@@ -86,5 +86,14 @@
         <url-pattern>/command/registration</url-pattern>
     </filter-mapping>
 
+    <filter>
+        <filter-name>uservalidfilter</filter-name>
+        <filter-class>com.study.my.filter.UserDataValidationFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>uservalidfilter</filter-name>
+        <url-pattern>/command/user/profile</url-pattern>
+    </filter-mapping>
 
 </web-app>

@@ -1,6 +1,7 @@
 package com.study.my.servlet;
 
 import com.study.my.command.*;
+import com.study.my.service.DiplomaService;
 import com.study.my.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -19,22 +20,25 @@ import java.util.Map;
 public class Servlet extends HttpServlet {
 
     private UserService userService = new UserService();
+    private DiplomaService diplomaService = new DiplomaService();
     private Map<String, Command> commands = new HashMap<>();
-    Logger logger=Logger.getLogger(Servlet.class);
+    private static final Logger LOGGER = Logger.getLogger(Servlet.class);
 
     @Override
     public void init() throws ServletException {
         commands.put("login", new LoginCommand(userService));
         commands.put("logout", new LogoutCommand());
         commands.put("user", new UserCommand());
+        commands.put("user/profile", new ProfileCommand(userService, diplomaService));
         commands.put("admin", new UserCommand());
         commands.put("admin/students", new StudentListCommand(userService));
         commands.put("registration", new RegistrationCommand(userService));
+        commands.put("user/diploma", new DiplomaCommand(userService, diplomaService));
     }
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        logger.debug("Servlet process get request "+httpServletRequest.getRequestURI());
+        LOGGER.debug("Servlet process get request " + httpServletRequest.getRequestURI());
         processRequest(httpServletRequest, httpServletResponse);
     }
 
@@ -47,16 +51,13 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         path = path.replaceAll(".*/admission/command/", "");
-        System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + path);
         Command command = commands.getOrDefault(path,
                 r -> "/index.jsp");
-        System.out.println(command.getClass().getName());
         String page = command.execute(request);
-        System.out.println("return from command: " + page);
         if (page.contains("redirect:")) {
             response.sendRedirect(page.replace("redirect:", "/admission/command"));
         } else {
-            System.out.println("forward to page: " + page);
+            LOGGER.debug("forward to page: " + page);
             request.getRequestDispatcher(page).forward(request, response);
         }
 

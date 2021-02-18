@@ -19,7 +19,7 @@
     <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
         <div class="row">
             <div class="col-md-1 col-md-offset-1 navbar-brand">
-                <a href="${pageContext.request.contextPath}/command/profile"><fmt:message
+                <a href="${pageContext.request.contextPath}/command/user/profile"><fmt:message
                         key="header.Profile"/>
             </div>
 

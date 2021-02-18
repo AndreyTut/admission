@@ -41,4 +41,12 @@ public class UserService {
     public User getFullStudent(Integer id) {
         return userDao.findWithDiploma(id);
     }
+
+    public boolean update(User student) {
+        return userDao.update(student);
+    }
+
+    public User getById(int id) {
+        return userDao.findById(id);
+    }
 }

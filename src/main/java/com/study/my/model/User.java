@@ -24,7 +24,7 @@ public class User {
 
     private String schoolName;
 
-//    private Diploma diploma;
+    private Diploma diploma;
 
     private boolean enabled = true;
 
@@ -153,6 +153,14 @@ public class User {
         return lastName + " " + firstName + " " + patronymic;
     }
 
+    public Diploma getDiploma() {
+        return diploma;
+    }
+
+    public void setDiploma(Diploma diploma) {
+        this.diploma = diploma;
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }
@@ -167,7 +175,7 @@ public class User {
         private String city;
         private String region;
         private String schoolName;
-        //        private Diploma diploma;
+        private Diploma diploma;
         private boolean enabled;
         //        private List<StudentMark> marks;
 //        private List<Faculty> faculties;
@@ -222,10 +230,10 @@ public class User {
             return this;
         }
 
-//        public UserBuilder diploma(Diploma diploma) {
-//            this.diploma = diploma;
-//            return this;
-//        }
+        public UserBuilder diploma(Diploma diploma) {
+            this.diploma = diploma;
+            return this;
+        }
 
         public UserBuilder isEnabled(boolean isEnabled) {
             this.enabled = true;
@@ -271,7 +279,7 @@ public class User {
                 ", region='" + region + '\'' +
                 ", schoolName='" + schoolName + '\'' +
                 ", isEnabled=" + enabled +
-                ", diplomImage=" + Arrays.toString(diplomImage) +
+                ", diplomImage size:" + (diplomImage == null ? 0 : diplomImage.length) +
                 ", roles=" + roles +
                 '}';
     }

@@ -1,0 +1,56 @@
+package com.study.my.command;
+
+import com.study.my.model.Diploma;
+import com.study.my.model.User;
+import com.study.my.service.DiplomaService;
+import com.study.my.service.UserService;
+import com.study.my.util.Constants;
+import com.sun.xml.internal.bind.v2.model.core.ID;
+import org.apache.log4j.Logger;
+
+import javax.servlet.http.HttpServletRequest;
+
+import static com.study.my.util.Constants.*;
+import static com.study.my.util.Constants.SUBJ_BIOLOGY;
+
+public class DiplomaCommand implements Command {
+    private UserService userService;
+    private DiplomaService diplomaService;
+    private static final Logger LOGGER = Logger.getLogger(DiplomaCommand.class);
+
+
+    public DiplomaCommand(UserService userService, DiplomaService diplomaService) {
+        this.userService = userService;
+        this.diplomaService = diplomaService;
+    }
+
+    @Override
+    public String execute(HttpServletRequest request) {
+        int math = Integer.parseInt(request.getParameter(SUBJ_MATH));
+        int physics = Integer.parseInt(request.getParameter(SUBJ_PHYSICS));
+        int history = Integer.parseInt(request.getParameter(SUBJ_HISTORY));
+        int literature = Integer.parseInt(request.getParameter(SUBJ_LITERATURE));
+        int chemistry = Integer.parseInt(request.getParameter(SUBJ_CHEMISTRY));
+        int biology = Integer.parseInt(request.getParameter(SUBJ_BIOLOGY));
+        String parameterId = request.getParameter(ID_FIELD);
+
+        Integer id = (parameterId == null || "".equals(parameterId)) ? null : Integer.parseInt(parameterId);
+        Diploma diploma = Diploma.builder()
+                .id(id)
+                .literature(literature)
+                .history(history)
+                .physics(physics)
+                .math(math)
+                .chemistry(chemistry)
+                .biology(biology)
+                .userId(((User) request.getSession().getAttribute("user")).getId())
+                .build();
+        diplomaService.save(diploma);
+        LOGGER.debug("Sending diploma form: " + diploma);
+
+        User fullStudent = userService.getFullStudent(diploma.getUserId());
+        request.setAttribute("student", fullStudent);
+        request.setAttribute("diploma", fullStudent.getDiploma());
+        return "/WEB-INF/jsp/user.jsp";
+    }
+}
