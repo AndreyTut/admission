@@ -34,7 +34,7 @@
                 <td><c:out value="${student.getFullName()}"/></td>
                 <td><c:out value="${student.email}"/></td>
                 <td><c:out value="${student.city}, ${student.region} "/><fmt:message key="table.cell.reg"/></td>
-                <td><a href="${pageContext.request.contextPath}/command/admin/student?email=${student.email}">
+                <td><a href="${pageContext.request.contextPath}/command/admin/student?id=${student.id}">
                     <fmt:message key="table.header.view"/>
                 </a></td>
             </tr>

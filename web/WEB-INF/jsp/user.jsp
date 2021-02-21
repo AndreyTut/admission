@@ -167,7 +167,7 @@
                         <div class="form-group">
                             <label class="control-label"><fmt:message key="student.diploma.math"/> </label>
                             <input name="math" value="${diploma!=null?diploma.math:''}" id="math" type="number"
-                                   min="0" max="12"  class="form-control">
+                                   min="0" max="12" class="form-control">
 
                         </div>
                     </div>
@@ -230,54 +230,54 @@
 
                 </div>
             </form>
-            <%--<hr>--%>
-            <%--<div class="row text-center">--%>
-            <%--<div class="col-md-6 col-md-offset-3">--%>
-            <%--<h3>--%>
-            <%--<em>--%>
-            <%--<span th:text="#{diploma.image}">Diploma photo</span>--%>
-            <%--</em>--%>
-            <%--</h3>--%>
-            <%--</div>--%>
-            <%--</div>--%>
+            <hr>
+            <div class="row text-center">
+                <div class="col-md-6 col-md-offset-3">
+                    <h3>
+                        <em>
+                            <span><fmt:message key="diploma.image"/> </span>
+                        </em>
+                    </h3>
+                </div>
+            </div>
 
-            <%--<div class="row">--%>
-            <%--<div class="col-md-10 col-md-offset-0">--%>
-            <%--<div class="text-center">--%>
-            <%--<a href="#" th:href="@{'/student/'+${student.email}+'/setimage'}">--%>
-            <%--<img class="img-fluid" src="../static/images/attestat.jpg"--%>
-            <%--th:src="@{'/diplomaimage/'+${student.email}}"--%>
-            <%--alt="No photo"/>--%>
-            <%--</a>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--<div class="col-md-2 col-md-offset-0">--%>
-            <%--<div th:if="${student.faculties!=null}">--%>
-            <%--<div class="row text-center">--%>
-            <%--<h5><em><span th:text="#{student.faculties}">Faculties:</span></em></h5>--%>
-            <%--</div>--%>
-            <%--<ul>--%>
-            <%--<li th:each="faculty: ${student.faculties}">--%>
-            <%--<span th:if="__${#locale.language}__=='ua'"--%>
-            <%--th:text="${faculty.nameUa}">Faculty name</span>--%>
-            <%--<span th:if="__${#locale.language}__=='en'"--%>
-            <%--th:text="${faculty.nameEn}">Faculty name</span>--%>
-            <%--</li>--%>
-            <%--</ul>--%>
-            <%--</div>--%>
-            <%--<div>--%>
-            <%--<a th:href="@{/user/faculty/all}">--%>
-            <%--<span th:text="#{faculty.add}"></span>--%>
-            <%--<img src="../static/images/add.png"--%>
-            <%--th:src="@{/images/add.png}" alt="add"/>--%>
-            <%--</a>--%>
-            <%--</div>--%>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-0">
+                    <div class="text-center">
+                        <a href="${pageContext.request.contextPath}/command/user/setimage">
+                            <img class="img-fluid"
+                                 src="data:image/jpg;base64,${stringimage}"
+                                 alt="No photo"/>
+                        </a>
+                    </div>
+                </div>
+                <%--<div class="col-md-2 col-md-offset-0">--%>
+                <%--<div th:if="${student.faculties!=null}">--%>
+                <%--<div class="row text-center">--%>
+                <%--<h5><em><span th:text="#{student.faculties}">Faculties:</span></em></h5>--%>
+                <%--</div>--%>
+                <%--<ul>--%>
+                <%--<li th:each="faculty: ${student.faculties}">--%>
+                <%--<span th:if="__${#locale.language}__=='ua'"--%>
+                <%--th:text="${faculty.nameUa}">Faculty name</span>--%>
+                <%--<span th:if="__${#locale.language}__=='en'"--%>
+                <%--th:text="${faculty.nameEn}">Faculty name</span>--%>
+                <%--</li>--%>
+                <%--</ul>--%>
+                <%--</div>--%>
+                <%--<div>--%>
+                <%--<a th:href="@{/user/faculty/all}">--%>
+                <%--<span th:text="#{faculty.add}"></span>--%>
+                <%--<img src="../static/images/add.png"--%>
+                <%--th:src="@{/images/add.png}" alt="add"/>--%>
+                <%--</a>--%>
+                <%--</div>--%>
 
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</div>--%>
-            <%--</div>--%>
+                <%--</div>--%>
+                <%--</div>--%>
+                <%--</div>--%>
+                <%--</div>--%>
+                <%--</div>--%>
 
 </body>
 </html>

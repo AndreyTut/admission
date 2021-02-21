@@ -1,23 +1,21 @@
 package com.study.my.command;
 
 import com.study.my.model.User;
-import com.study.my.service.DiplomaService;
 import com.study.my.service.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 import static com.study.my.util.Constants.*;
+import static com.study.my.util.Utils.putStudentToRequest;
 
 
 public class ProfileCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(ProfileCommand.class);
     private UserService userService;
-    private DiplomaService diplomaService;
 
-    public ProfileCommand(UserService userService, DiplomaService diplomaService) {
+    public ProfileCommand(UserService userService) {
         this.userService = userService;
-        this.diplomaService = diplomaService;
     }
 
     @Override
@@ -25,9 +23,7 @@ public class ProfileCommand implements Command {
         if ("GET".equals(request.getMethod())) {
             User user = (User) request.getSession().getAttribute("user");
             User student = userService.getFullStudent(user.getId());
-            LOGGER.debug("Sending student: " + student);
-            request.setAttribute("student", student);
-            request.setAttribute("diploma", student.getDiploma());
+            putStudentToRequest(student, request);
         }
 
         if ("POST".equals(request.getMethod())) {
@@ -58,12 +54,11 @@ public class ProfileCommand implements Command {
             LOGGER.debug("Sending student form: " + student);
             userService.update(student);
             User fullStudent = userService.getFullStudent(student.getId());
-            request.setAttribute("student", fullStudent);
-            request.setAttribute("diploma", fullStudent.getDiploma());
-
+            putStudentToRequest(fullStudent, request);
         }
 
 
         return "/WEB-INF/jsp/user.jsp";
     }
+
 }

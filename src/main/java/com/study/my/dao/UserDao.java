@@ -10,4 +10,10 @@ public interface UserDao extends GenericDao<User> {
     Optional<User> findByEmailAndPassword(String email, String psw);
 
     User findWithDiploma(Integer id);
+
+    boolean updateDiplomaImage(int userId, byte[] image);
+
+    byte[] getDiplImage(int studentId);
+
+    boolean setEnabled(int id, boolean enabled);
 }

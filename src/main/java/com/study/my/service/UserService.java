@@ -49,4 +49,24 @@ public class UserService {
     public User getById(int id) {
         return userDao.findById(id);
     }
+
+    public boolean setDiplomaImage(int userId, byte[] image) {
+        boolean updated = userDao.updateDiplomaImage(userId, image);
+        LOGGER.debug("updated diploma image (image size = " + image.length + " for user with id " + userId + " result: " + updated);
+        return updated;
+    }
+
+    public byte[] getDiplomaImage(int studentId) {
+        return userDao.getDiplImage(studentId);
+    }
+
+    public User getByEmail(String email) {
+        Optional<User> userOptional = userDao.findByEmail(email);
+        //TODO Change with custom exception
+        return userOptional.orElseThrow(RuntimeException::new);
+    }
+
+    public boolean setEnabled(int id, boolean enabled) {
+        return userDao.setEnabled(id, enabled);
+    }
 }

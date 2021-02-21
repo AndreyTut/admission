@@ -26,7 +26,7 @@ public class User {
 
     private Diploma diploma;
 
-    private boolean enabled = true;
+    private boolean enabled;
 
 //    private List<StudentMark> marks;
 
@@ -40,7 +40,7 @@ public class User {
         this.email = email;
     }
 
-    public User(Integer id, String email, String password, String firstName, String lastName, String patronymic, String city, String region, String schoolName, byte[] diplomImage) {
+    public User(Integer id, String email, String password, String firstName, String lastName, String patronymic, String city, String region, String schoolName, byte[] diplomImage, boolean enabled) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -51,6 +51,7 @@ public class User {
         this.region = region;
         this.schoolName = schoolName;
         this.diplomImage = diplomImage;
+        this.enabled=enabled;
     }
 
     public Integer getId() {
@@ -130,7 +131,7 @@ public class User {
     }
 
     public void setEnabled(boolean enabled) {
-        enabled = enabled;
+        this.enabled = enabled;
     }
 
     public byte[] getDiplomImage() {
@@ -236,7 +237,7 @@ public class User {
         }
 
         public UserBuilder isEnabled(boolean isEnabled) {
-            this.enabled = true;
+            this.enabled = isEnabled;
             return this;
         }
 
@@ -261,7 +262,7 @@ public class User {
         }
 
         public User build() {
-            return new User(id, email, password, firstName, lastName, patronymic, city, region, schoolName, diplomImage); //, rolesdiploma, isEnabled$value, marks, faculties);
+            return new User(id, email, password, firstName, lastName, patronymic, city, region, schoolName, diplomImage, enabled); //, rolesdiploma, isEnabled$value, marks, faculties);
         }
 
     }

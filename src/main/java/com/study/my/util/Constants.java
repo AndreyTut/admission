@@ -37,10 +37,14 @@ public class Constants {
     public static final String UPDATE_USER = "UPDATE user_db u SET email=?, password=?, first_name=?, last_name=?," +
             " patronymic=?, city=?, region=?, school_name=?, enabled=? WHERE u.id=?";
 
+    public static final String SET_ENABLED = "UPDATE user_db u SET enabled=? WHERE u.id=?";
+
     public static final String CREATE_DIPLOMA = "INSERT INTO diploma (math, physics, history, literature, chemistry, biology, user_id)" +
             "VALUES(?, ?, ?, ?, ?, ?, ?)";
 
     public static final String UPDATE_DIPLOMA = "UPDATE diploma SET math=?, physics=?, history=?, literature=?, chemistry=?, biology=? WHERE id=?";
+    public static final String UPD_USER_DIPL_IMAGE = "UPDATE user_db SET diplom_image=? WHERE id=?";
+    public static final String GET_IMG = "SELECT diplom_image FROM user_db WHERE id=?";
 
     public static String SUBJ_CHEMISTRY = "chemistry";
     public static String SUBJ_LITERATURE = "literature";

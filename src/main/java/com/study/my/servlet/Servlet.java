@@ -29,16 +29,21 @@ public class Servlet extends HttpServlet {
         commands.put("login", new LoginCommand(userService));
         commands.put("logout", new LogoutCommand());
         commands.put("user", new UserCommand());
-        commands.put("user/profile", new ProfileCommand(userService, diplomaService));
+        commands.put("user/profile", new ProfileCommand(userService));
         commands.put("admin", new UserCommand());
         commands.put("admin/students", new StudentListCommand(userService));
         commands.put("registration", new RegistrationCommand(userService));
         commands.put("user/diploma", new DiplomaCommand(userService, diplomaService));
+        commands.put("user/setimage", new DiplomaImageCommand(userService));
+        commands.put("admin/student", new ViewStudentCommand(userService));
+        commands.put("admin/student/changeactive", new BlockStudentCommand(userService));
+
     }
 
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         LOGGER.debug("Servlet process get request " + httpServletRequest.getRequestURI());
+
         processRequest(httpServletRequest, httpServletResponse);
     }
 
@@ -51,6 +56,7 @@ public class Servlet extends HttpServlet {
             throws ServletException, IOException {
         String path = request.getRequestURI();
         path = path.replaceAll(".*/admission/command/", "");
+
         Command command = commands.getOrDefault(path,
                 r -> "/index.jsp");
         String page = command.execute(request);

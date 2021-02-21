@@ -66,6 +66,46 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean updateDiplomaImage(int userId, byte[] image) {
+        try (PreparedStatement statement = connection.prepareStatement(UPD_USER_DIPL_IMAGE)) {
+            statement.setBytes(1, image);
+            statement.setInt(2, userId);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public byte[] getDiplImage(int id) {
+        try (PreparedStatement statement = connection.prepareStatement(GET_IMG)) {
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getBytes("diplom_image");
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean setEnabled(int id, boolean enabled) {
+        try (PreparedStatement statement = connection.prepareStatement(SET_ENABLED)) {
+            statement.setBoolean(1, enabled);
+            statement.setInt(2, id);
+            LOGGER.debug("block user, set enabled = " + enabled + ", id = " + id);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public boolean create(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_WITH_ROLE)) {
             fillStatment(user, statement);
@@ -187,6 +227,7 @@ public class UserDaoImpl implements UserDao {
         user.setSchoolName(resultSet.getString("school_name"));
         user.setDiplomImage(resultSet.getBytes("diplom_image"));
         user.setEnabled(resultSet.getBoolean("enabled"));
+        LOGGER.debug("getting user: " + user);
         return user;
     }
 

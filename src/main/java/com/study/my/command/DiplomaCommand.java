@@ -10,8 +10,11 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.Base64;
+
 import static com.study.my.util.Constants.*;
 import static com.study.my.util.Constants.SUBJ_BIOLOGY;
+import static com.study.my.util.Utils.putStudentToRequest;
 
 public class DiplomaCommand implements Command {
     private UserService userService;
@@ -26,6 +29,12 @@ public class DiplomaCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+
+        if ("GET".equals(request.getMethod())) {
+            User fullStudent = userService.getFullStudent(((User) (request.getSession().getAttribute("user"))).getId());
+            putStudentToRequest(fullStudent, request);
+            return "/WEB-INF/jsp/user.jsp";
+        }
         int math = Integer.parseInt(request.getParameter(SUBJ_MATH));
         int physics = Integer.parseInt(request.getParameter(SUBJ_PHYSICS));
         int history = Integer.parseInt(request.getParameter(SUBJ_HISTORY));
@@ -49,8 +58,7 @@ public class DiplomaCommand implements Command {
         LOGGER.debug("Sending diploma form: " + diploma);
 
         User fullStudent = userService.getFullStudent(diploma.getUserId());
-        request.setAttribute("student", fullStudent);
-        request.setAttribute("diploma", fullStudent.getDiploma());
+        putStudentToRequest(fullStudent, request);
         return "/WEB-INF/jsp/user.jsp";
     }
 }

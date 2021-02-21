@@ -2,13 +2,9 @@ package com.study.my.command;
 
 import com.study.my.model.User;
 import com.study.my.service.UserService;
+import com.study.my.util.Utils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 import static com.study.my.util.Constants.*;
 
@@ -36,24 +32,7 @@ public class RegistrationCommand implements Command {
         String region = request.getParameter(REGION_FIELD);
         String schoolName = request.getParameter(SCHOOL_NAME_FIELD);
 
-        byte[] image = null;
-        try {
-            Part filePart = request.getPart(FILE_NAME);
-            if (filePart != null) {
-                InputStream fileContent = filePart.getInputStream();
-                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-                while (fileContent.available() > 0) {
-                    byteArrayOutputStream.write(fileContent.read());
-                }
-                byteArrayOutputStream.flush();
-                image = byteArrayOutputStream.toByteArray();
-            }
-        } catch (IOException | ServletException e) {
-            e.printStackTrace();
-
-            //TODO process
-            throw new RuntimeException(e);
-        }
+        byte[] image = Utils.getImageFromRequest(request);
 
         User user = User.builder()
                 .email(email)
@@ -65,6 +44,7 @@ public class RegistrationCommand implements Command {
                 .region(region)
                 .schoolName(schoolName)
                 .diplomImage(image)
+                .isEnabled(true)
                 .build();
 
         userService.create(user);
