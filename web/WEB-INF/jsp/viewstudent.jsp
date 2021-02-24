@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="messages"/>
 <html lang="${sessionScope.lang}">
-<html>
 <head>
     <title>Student</title>
     <link href="${pageContext.request.contextPath}/resources/css/bootstrap-3.3.4-dist/css/bootstrap.min.css"
@@ -149,6 +148,41 @@
             <h4><fmt:message key="student.diploma.scan"/></h4>
             <img src="data:image/jpg;base64,${stringimage}" class="img-fluid"
                  alt="Student didn't load diploma scan"/>
+
+        </div>
+        <div class="col-md-2">
+            <c:if test="${student.faculty==null}">
+                <h4><fmt:message key="student.faculties"/></h4>
+                <ul>
+                    <c:forEach items="${student.faculties}" var="faculty">
+                        <li>
+                        <span>
+                        <c:if test="${sessionScope.lang=='ua'}">
+                            ${faculty.nameUa}
+                        </c:if>
+                        <c:if test="${sessionScope.lang!='ua'}">
+                            ${faculty.nameEn}
+                        </c:if>
+                            <a href="${pageContext.request.contextPath}/command/admin/addtoreport?stid=${student.id}&fid=${faculty.id}"><fmt:message
+                                    key="student.addtoreport"/> </a>
+                        </span>
+                        </li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+
+            <c:if test="${student.faculty!=null}">
+                <span><fmt:message key="student.inreport"/>
+                                        <c:if test="${sessionScope.lang=='ua'}">
+                                            ${student.faculty.nameUa}
+                                        </c:if>
+                        <c:if test="${sessionScope.lang!='ua'}">
+                            ${student.faculty.nameEn}
+                        </c:if>
+
+                </span>
+            </c:if>
+
 
         </div>
     </div>

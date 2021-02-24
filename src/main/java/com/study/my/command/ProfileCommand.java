@@ -1,10 +1,14 @@
 package com.study.my.command;
 
+import com.study.my.model.Faculty;
 import com.study.my.model.User;
+import com.study.my.service.FacultyService;
 import com.study.my.service.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+
+import java.util.List;
 
 import static com.study.my.util.Constants.*;
 import static com.study.my.util.Utils.putStudentToRequest;
@@ -13,9 +17,11 @@ import static com.study.my.util.Utils.putStudentToRequest;
 public class ProfileCommand implements Command {
     private static final Logger LOGGER = Logger.getLogger(ProfileCommand.class);
     private UserService userService;
+    private FacultyService facultyService;
 
-    public ProfileCommand(UserService userService) {
+    public ProfileCommand(UserService userService, FacultyService facultyService) {
         this.userService = userService;
+        this.facultyService = facultyService;
     }
 
     @Override
@@ -23,6 +29,8 @@ public class ProfileCommand implements Command {
         if ("GET".equals(request.getMethod())) {
             User user = (User) request.getSession().getAttribute("user");
             User student = userService.getFullStudent(user.getId());
+            List<Faculty> faculties = facultyService.getUserFaculty(user.getId());
+            student.setFaculties(faculties);
             putStudentToRequest(student, request);
         }
 
@@ -54,6 +62,8 @@ public class ProfileCommand implements Command {
             LOGGER.debug("Sending student form: " + student);
             userService.update(student);
             User fullStudent = userService.getFullStudent(student.getId());
+            List<Faculty> faculties = facultyService.getUserFaculty(student.getId());
+            fullStudent.setFaculties(faculties);
             putStudentToRequest(fullStudent, request);
         }
 

@@ -1,7 +1,6 @@
 package com.study.my.dao;
 
 import com.study.my.model.Diploma;
-import com.study.my.util.Constants;
 import org.apache.log4j.Logger;
 
 import java.sql.Connection;
@@ -9,7 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import static com.study.my.util.Constants.*;
+import static com.study.my.util.Constants.CREATE_DIPLOMA;
+import static com.study.my.util.Constants.UPDATE_DIPLOMA;
 
 public class DiplomaDaoImpl implements DiplomaDao {
 
@@ -21,11 +21,12 @@ public class DiplomaDaoImpl implements DiplomaDao {
     }
 
     @Override
-    public boolean create(Diploma diploma) {
+    public Diploma create(Diploma diploma) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_DIPLOMA)) {
             fillStatement(statement, diploma);
             statement.setInt(7, diploma.getUserId());
-            return statement.execute();
+            statement.execute();
+            return diploma;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
             //TODO change om custom exception
@@ -63,7 +64,11 @@ public class DiplomaDaoImpl implements DiplomaDao {
 
     @Override
     public void close() {
-
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void fillStatement(PreparedStatement statement, Diploma diploma) throws SQLException {

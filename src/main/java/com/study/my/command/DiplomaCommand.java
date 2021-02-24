@@ -3,6 +3,7 @@ package com.study.my.command;
 import com.study.my.model.Diploma;
 import com.study.my.model.User;
 import com.study.my.service.DiplomaService;
+import com.study.my.service.FacultyService;
 import com.study.my.service.UserService;
 import com.study.my.util.Constants;
 import com.sun.xml.internal.bind.v2.model.core.ID;
@@ -19,12 +20,13 @@ import static com.study.my.util.Utils.putStudentToRequest;
 public class DiplomaCommand implements Command {
     private UserService userService;
     private DiplomaService diplomaService;
+    private FacultyService facultyService;
     private static final Logger LOGGER = Logger.getLogger(DiplomaCommand.class);
 
-
-    public DiplomaCommand(UserService userService, DiplomaService diplomaService) {
+    public DiplomaCommand(UserService userService, DiplomaService diplomaService, FacultyService facultyService) {
         this.userService = userService;
         this.diplomaService = diplomaService;
+        this.facultyService = facultyService;
     }
 
     @Override
@@ -58,6 +60,7 @@ public class DiplomaCommand implements Command {
         LOGGER.debug("Sending diploma form: " + diploma);
 
         User fullStudent = userService.getFullStudent(diploma.getUserId());
+        fullStudent.setFaculties(facultyService.getUserFaculty(fullStudent.getId()));
         putStudentToRequest(fullStudent, request);
         return "/WEB-INF/jsp/user.jsp";
     }

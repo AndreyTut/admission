@@ -2,6 +2,7 @@ package com.study.my.servlet;
 
 import com.study.my.command.*;
 import com.study.my.service.DiplomaService;
+import com.study.my.service.FacultyService;
 import com.study.my.service.UserService;
 import org.apache.log4j.Logger;
 
@@ -21,6 +22,7 @@ public class Servlet extends HttpServlet {
 
     private UserService userService = new UserService();
     private DiplomaService diplomaService = new DiplomaService();
+    private FacultyService facultyService = new FacultyService();
     private Map<String, Command> commands = new HashMap<>();
     private static final Logger LOGGER = Logger.getLogger(Servlet.class);
 
@@ -29,14 +31,22 @@ public class Servlet extends HttpServlet {
         commands.put("login", new LoginCommand(userService));
         commands.put("logout", new LogoutCommand());
         commands.put("user", new UserCommand());
-        commands.put("user/profile", new ProfileCommand(userService));
+        commands.put("user/profile", new ProfileCommand(userService, facultyService));
         commands.put("admin", new UserCommand());
         commands.put("admin/students", new StudentListCommand(userService));
         commands.put("registration", new RegistrationCommand(userService));
-        commands.put("user/diploma", new DiplomaCommand(userService, diplomaService));
+        commands.put("user/diploma", new DiplomaCommand(userService, diplomaService, facultyService));
+        commands.put("user/addfaculty", new SubscribeFacultyCommand(userService, facultyService));
+        commands.put("user/faculty/submit", new SubmitFacultyCommand(userService, facultyService));
         commands.put("user/setimage", new DiplomaImageCommand(userService));
-        commands.put("admin/student", new ViewStudentCommand(userService));
+        commands.put("admin/student", new ViewStudentCommand(userService, facultyService));
         commands.put("admin/student/changeactive", new BlockStudentCommand(userService));
+        commands.put("admin/faculties", new FacultyCommand(facultyService));
+        commands.put("admin/faculty/edit", new EditFacultyCommand(facultyService));
+        commands.put("admin/faculty/add", new EditFacultyCommand(facultyService));
+        commands.put("admin/faculty/save", new SaveFacultyCommand(facultyService));
+        commands.put("admin/faculty/delete", new DeleteFacultyCommand(facultyService));
+        commands.put("admin/addtoreport", new AddToReportCommand(userService, facultyService));
 
     }
 

@@ -1,8 +1,6 @@
 package com.study.my.dao;
 
-import com.study.my.model.Diploma;
-import com.study.my.model.Role;
-import com.study.my.model.User;
+import com.study.my.model.*;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
@@ -106,15 +104,102 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean create(User user) {
-        try (PreparedStatement statement = connection.prepareStatement(CREATE_WITH_ROLE)) {
-            fillStatment(user, statement);
-            statement.setBytes(10, user.getDiplomImage());
-            return statement.execute();
+    public StudentMark getMark(Integer subjId, Integer userId) {
+        try (PreparedStatement statement = connection.prepareStatement(GET_USERMARK)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, subjId);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                StudentMark mark = new StudentMark();
+                mark.setId(resultSet.getInt("id"));
+                mark.setMark(resultSet.getInt("mark"));
+                return mark;
+            }
+            return new StudentMark();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void addFaculty(int facultyId, int userId) {
+        try (PreparedStatement statement = connection.prepareStatement(STUDENT_ADD_FACULTY)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, facultyId);
+            statement.execute();
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void createMark(Integer userId, int subjId, int mark) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_STUDENT_MARK)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, subjId);
+            statement.setInt(3, mark);
+            statement.execute();
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateMark(Integer markId, int mark) {
+        try (PreparedStatement statement = connection.prepareStatement(UPDATE_STUDENT_MARK)) {
+            statement.setInt(1, mark);
+            statement.setInt(2, markId);
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public boolean ifExistStudentFaculty(int facultyId, int userId) {
+        try (PreparedStatement statement = connection.prepareStatement(STUDENT_FACULTY_SIMPLE)) {
+            statement.setInt(1, userId);
+            statement.setInt(2, facultyId);
+            return (statement.executeQuery()).next();
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void setFaculty(Integer studentId, Integer facultyId) {
+        try (PreparedStatement statement = connection.prepareStatement(SET_STUDENT_FACULTY)) {
+            statement.setInt(1, facultyId);
+            statement.setInt(2, studentId);
+            statement.execute();
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public User create(User user) {
+        try (PreparedStatement statement = connection.prepareStatement(CREATE_WITH_ROLE, Statement.RETURN_GENERATED_KEYS)) {
+            fillStatment(user, statement);
+            statement.setBytes(10, user.getDiplomImage());
+            statement.execute();
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                    LOGGER.debug("created user: " + user);
+                    return user;
+                }
+            }
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 
     @Override

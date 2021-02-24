@@ -1,7 +1,7 @@
 package com.study.my.model;
 
 
-import java.util.Arrays;
+import java.util.List;
 import java.util.Set;
 
 public class User {
@@ -28,9 +28,11 @@ public class User {
 
     private boolean enabled;
 
+    private Faculty faculty;
+
 //    private List<StudentMark> marks;
 
-//    private List<Faculty> faculties;
+    private List<Faculty> faculties;
 
     private byte[] diplomImage;
 
@@ -40,7 +42,7 @@ public class User {
         this.email = email;
     }
 
-    public User(Integer id, String email, String password, String firstName, String lastName, String patronymic, String city, String region, String schoolName, byte[] diplomImage, boolean enabled) {
+    public User(Integer id, String email, String password, String firstName, String lastName, String patronymic, String city, String region, String schoolName, Faculty faculty, byte[] diplomImage, boolean enabled, List<Faculty> faculties) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -50,8 +52,10 @@ public class User {
         this.city = city;
         this.region = region;
         this.schoolName = schoolName;
+        this.faculty = faculty;
         this.diplomImage = diplomImage;
-        this.enabled=enabled;
+        this.enabled = enabled;
+        this.faculties = faculties;
     }
 
     public Integer getId() {
@@ -162,12 +166,29 @@ public class User {
         this.diploma = diploma;
     }
 
+    public List<Faculty> getFaculties() {
+        return faculties;
+    }
+
+    public void setFaculties(List<Faculty> faculties) {
+        this.faculties = faculties;
+    }
+
+    public Faculty getFaculty() {
+        return faculty;
+    }
+
+    public void setFaculty(Faculty faculty) {
+        this.faculty = faculty;
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }
 
     public static class UserBuilder {
         private Integer id;
+        private Faculty faculty;
         private String email;
         private String password;
         private String firstName;
@@ -179,7 +200,7 @@ public class User {
         private Diploma diploma;
         private boolean enabled;
         //        private List<StudentMark> marks;
-//        private List<Faculty> faculties;
+        private List<Faculty> faculties;
         private byte[] diplomImage;
         private Set<Role> roles;
 
@@ -241,15 +262,15 @@ public class User {
             return this;
         }
 
-//        public UserBuilder marks(List<StudentMark> marks) {
+        //        public UserBuilder marks(List<StudentMark> marks) {
 //            this.marks = marks;
 //            return this;
 //        }
 //
-//        public UserBuilder faculties(List<Faculty> faculties) {
-//            this.faculties = faculties;
-//            return this;
-//        }
+        public UserBuilder faculties(List<Faculty> faculties) {
+            this.faculties = faculties;
+            return this;
+        }
 
         public UserBuilder diplomImage(byte[] diplomImage) {
             this.diplomImage = diplomImage;
@@ -262,7 +283,7 @@ public class User {
         }
 
         public User build() {
-            return new User(id, email, password, firstName, lastName, patronymic, city, region, schoolName, diplomImage, enabled); //, rolesdiploma, isEnabled$value, marks, faculties);
+            return new User(id, email, password, firstName, lastName, patronymic, city, region, schoolName, faculty, diplomImage, enabled, faculties); //, rolesdiploma, isEnabled$value, marks, faculties);
         }
 
     }

@@ -4,6 +4,7 @@ import com.study.my.dao.AbstractDaoFactory;
 import com.study.my.dao.DaoFactory;
 import com.study.my.dao.UserDao;
 import com.study.my.model.Role;
+import com.study.my.model.StudentMark;
 import com.study.my.model.User;
 import org.apache.log4j.Logger;
 
@@ -27,7 +28,7 @@ public class UserService {
     }
 
     public boolean create(User user) {
-        return userDao.create(user);
+        return userDao.create(user) != null;
     }
 
     public List<User> getAll() {
@@ -68,5 +69,30 @@ public class UserService {
 
     public boolean setEnabled(int id, boolean enabled) {
         return userDao.setEnabled(id, enabled);
+    }
+
+    public StudentMark getStudentMark(Integer subjId, Integer userId) {
+//        User student = userDao.findById(userId);
+        StudentMark mark = userDao.getMark(subjId, userId);
+//        mark.setUser(student);
+        return mark;
+    }
+
+    public void addFaculty(int facultyId, int userId) {
+        if (!userDao.ifExistStudentFaculty(facultyId, userId)) {
+            userDao.addFaculty(facultyId, userId);
+        }
+    }
+
+    public void saveMark(Integer markId, Integer userId, int subjId, int mark) {
+        if (markId == null) {
+            userDao.createMark(userId, subjId, mark);
+        } else {
+            userDao.updateMark(markId, mark);
+        }
+    }
+
+    public void subscribeOnfaculty(Integer studentId, Integer facultyId) {
+        userDao.setFaculty(studentId, facultyId);
     }
 }

@@ -18,6 +18,16 @@ public class DaoFactory extends AbstractDaoFactory {
         return new DiplomaDaoImpl(getConnection());
     }
 
+    @Override
+    public FacultyDao createFacultyDao() {
+        return new FacultyDaoImpl(getConnection());
+    }
+
+    @Override
+    public SubjectDao createSubjectDao() {
+        return new SubjectDaoImpl(getConnection());
+    }
+
 
     private Connection getConnection() {
         try {

@@ -139,8 +139,7 @@
                 <div class="row info">
 
                     <div class="col-md-4 col-md-offset-1">
-                        <button type="submit" class="btn btn-info"><fmt:message
-                                key="student.save.changes"/></button>
+                        <button type="submit" class="btn btn-info"><fmt:message key="student.save.changes"/></button>
                     </div>
 
                 </div>
@@ -251,33 +250,40 @@
                         </a>
                     </div>
                 </div>
-                <%--<div class="col-md-2 col-md-offset-0">--%>
-                <%--<div th:if="${student.faculties!=null}">--%>
-                <%--<div class="row text-center">--%>
-                <%--<h5><em><span th:text="#{student.faculties}">Faculties:</span></em></h5>--%>
-                <%--</div>--%>
-                <%--<ul>--%>
-                <%--<li th:each="faculty: ${student.faculties}">--%>
-                <%--<span th:if="__${#locale.language}__=='ua'"--%>
-                <%--th:text="${faculty.nameUa}">Faculty name</span>--%>
-                <%--<span th:if="__${#locale.language}__=='en'"--%>
-                <%--th:text="${faculty.nameEn}">Faculty name</span>--%>
-                <%--</li>--%>
-                <%--</ul>--%>
-                <%--</div>--%>
-                <%--<div>--%>
-                <%--<a th:href="@{/user/faculty/all}">--%>
-                <%--<span th:text="#{faculty.add}"></span>--%>
-                <%--<img src="../static/images/add.png"--%>
-                <%--th:src="@{/images/add.png}" alt="add"/>--%>
-                <%--</a>--%>
-                <%--</div>--%>
 
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--</div>--%>
-                <%--</div>--%>
+                <div class="col-md-2 col-md-offset-0">
+                    <c:if test="${student.faculties!=null}">
+                        <div>
+                            <div class="row text-center">
+                                <h5><em><span><fmt:message key="student.faculties"/> </span></em></h5>
+                            </div>
+                            <ul>
+                                <c:forEach var="faculty" items="${student.faculties}">
+                                    <li>
+                                        <c:if test="${sessionScope.lang=='ua'}">
+                                            <span>${faculty.nameUa}</span>
+                                        </c:if>
+                                        <c:if test="${sessionScope.lang!='ua'}">
+                                            <span>${faculty.nameEn}</span>
+                                        </c:if>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </c:if>
+
+                    <div>
+                        <a href="${pageContext.request.contextPath}/command/user/addfaculty">
+                            <span><fmt:message key="faculty.add"/> </span>
+                            <img src="${pageContext.request.contextPath}/resources/images/add.png"/>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

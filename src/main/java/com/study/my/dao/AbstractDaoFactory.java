@@ -8,6 +8,10 @@ public abstract class AbstractDaoFactory {
 
     public abstract DiplomaDao createDiplomaDao();
 
+    public abstract FacultyDao createFacultyDao();
+
+    public abstract SubjectDao createSubjectDao();
+
     public static AbstractDaoFactory getInstance() {
         if (daoFactory == null) {
             synchronized (AbstractDaoFactory.class) {

@@ -16,9 +16,9 @@ public class DiplomaService {
 
     public boolean save(Diploma diploma) {
         if (diploma.getId() == null) {
-            boolean created = diplomaDao.create(diploma);
+            Diploma created = diplomaDao.create(diploma);
             LOGGER.debug("Creating diploma diploma: " + diploma + " result: " + created);
-            return created;
+            return created != null;
         } else {
             boolean updated = diplomaDao.update(diploma);
             LOGGER.debug("Updating diploma diploma: " + diploma + " result: " + updated);

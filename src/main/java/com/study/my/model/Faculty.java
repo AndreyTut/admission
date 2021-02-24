@@ -21,6 +21,10 @@ public class Faculty {
         this.students = students;
     }
 
+    public static FacultyBuilder builder() {
+        return new FacultyBuilder();
+    }
+
     public Integer getId() {
         return id;
     }
@@ -89,6 +93,7 @@ public class Faculty {
         FacultyBuilder() {
         }
 
+
         public FacultyBuilder id(Integer id) {
             this.id = id;
             return this;
@@ -127,5 +132,18 @@ public class Faculty {
         public Faculty build() {
             return new Faculty(id, nameEn, nameUa, vacancyBudge, vacancyContr, subjects, students);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Faculty{" +
+                "id=" + id +
+                ", nameEn='" + nameEn + '\'' +
+                ", nameUa='" + nameUa + '\'' +
+                ", vacancyBudge=" + vacancyBudge +
+                ", vacancyContr=" + vacancyContr +
+                ", subjects=" + subjects +
+                ", students=" + students +
+                '}';
     }
 }
