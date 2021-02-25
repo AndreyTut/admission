@@ -157,6 +157,16 @@ public class FacultyDaoImpl implements FacultyDao {
         }
     }
 
+    @Override
+    public void finalizeFaculty(int id) {
+        try (PreparedStatement statement = connection.prepareStatement(FINALIZE_FACULTY)) {
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     @Override
     public void close() {
@@ -169,13 +179,15 @@ public class FacultyDaoImpl implements FacultyDao {
 
     private Faculty getFromResultSet(ResultSet resultSet) throws SQLException {
 
-        return Faculty.builder()
+        Faculty faculty = Faculty.builder()
                 .id(resultSet.getInt(ID_FIELD))
                 .nameEn(resultSet.getString(NAME_EN))
                 .nameUa(resultSet.getString(NAME_UA))
                 .vacancyBudge(resultSet.getInt(VACS_BUDGET))
                 .vacancyContr(resultSet.getInt(VACS_CONTRACT))
                 .build();
+        faculty.setFinalized(resultSet.getBoolean(FINALIZED));
+        return faculty;
     }
 
 }

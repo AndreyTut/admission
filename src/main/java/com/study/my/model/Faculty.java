@@ -10,6 +10,7 @@ public class Faculty {
     private Integer vacancyContr;
     private List<Subject> subjects;
     private List<User> students;
+    private boolean finalized = false;
 
     public Faculty(Integer id, String nameEn, String nameUa, Integer vacancyBudge, Integer vacancyContr, List<Subject> subjects, List<User> students) {
         this.id = id;
@@ -79,6 +80,14 @@ public class Faculty {
 
     public void setStudents(List<User> students) {
         this.students = students;
+    }
+
+    public boolean isFinalized() {
+        return finalized;
+    }
+
+    public void setFinalized(boolean finalized) {
+        this.finalized = finalized;
     }
 
     public static class FacultyBuilder {

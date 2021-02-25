@@ -19,6 +19,22 @@
 
 <div class="container">
     <div class="row">
+
+        <c:if test="${student.status==1}">
+            <div class="col-md-10 col-md-offset-1 alert alert-success">
+                <span><fmt:message key="student.congrats.budget"/></span>
+            </div>
+        </c:if>
+        <c:if test="${student.status==2}">
+            <div class="col-md-10 col-md-offset-1 alert alert-success">
+                <span><fmt:message key="student.congrats.contract"/></span>
+            </div>
+        </c:if>
+        <c:if test="${student.status==3}">
+            <div class="col-md-10 col-md-offset-1 alert alert-danger">
+                <span><fmt:message key="student.sory"/></span>
+            </div>
+        </c:if>
         <div class="col-md-10 col-md-offset-1">
             <form method="post" action="${pageContext.request.contextPath}/command/user/profile">
                 <input type="hidden" value="${student!=null?student.id:sessionScope.get("user").id}" name="id">

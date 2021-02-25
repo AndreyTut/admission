@@ -3,6 +3,7 @@ package com.study.my.dao;
 import com.study.my.model.StudentMark;
 import com.study.my.model.User;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends GenericDao<User> {
@@ -29,4 +30,8 @@ public interface UserDao extends GenericDao<User> {
     boolean ifExistStudentFaculty(int facultyId, int userId);
 
     void setFaculty(Integer studentId, Integer facultyId);
+
+    public List<User> findByFaculty(int id, int sub1Id, int sub2Id);
+
+    void setStatus(Integer id, int status);
 }

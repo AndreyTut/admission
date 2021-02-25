@@ -65,6 +65,9 @@
             <th>
                 <fmt:message key="table.faculty.header.delete"/>
             </th>
+            <th>
+                <fmt:message key="table.faculty.header.finalize"/>
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -87,6 +90,16 @@
                 <td><a href="${pageContext.request.contextPath}/command/admin/faculty/delete?id=${faculty.id}">
                     <img src="${pageContext.request.contextPath}/resources/images/delete.png"/>
                 </a></td>
+                <td>
+                    <c:if test="${!faculty.finalized}">
+                        <a href="${pageContext.request.contextPath}/command/admin/faculty/finalize?id=${faculty.id}">
+                            <img src="${pageContext.request.contextPath}/resources/images/finalize.png"/>
+                        </a>
+                    </c:if>
+                    <c:if test="${faculty.finalized}">
+                        <span>FINALIZED</span>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

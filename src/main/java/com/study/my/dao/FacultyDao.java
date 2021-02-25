@@ -8,4 +8,6 @@ public interface FacultyDao extends GenericDao<Faculty> {
     List<Faculty> getForUser(Integer id);
 
     Faculty getOneForUser(int userId);
+
+    void finalizeFaculty(int id);
 }

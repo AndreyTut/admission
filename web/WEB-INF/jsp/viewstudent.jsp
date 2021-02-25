@@ -25,7 +25,7 @@
                         key="header.studentes"/>
             </div>
             <div class="col-md-1 col-md-offset-1 navbar-brand">
-                <a href="${pageContext.request.contextPath}/command/faculties"><fmt:message
+                <a href="${pageContext.request.contextPath}/command/admin/faculties"><fmt:message
                         key="header.Faculties"/>
             </div>
 

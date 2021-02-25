@@ -183,10 +183,56 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> findByFaculty(int id, int sub1Id, int sub2Id) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(GET_SUBSCRIBER_FACULTY)) {
+            preparedStatement.setInt(1, sub1Id);
+            preparedStatement.setInt(2, sub2Id);
+            preparedStatement.setInt(3, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            List<User> list = new ArrayList<>();
+            while (resultSet.next()) {
+                User user = getUserSimple(resultSet);
+                StudentMark mark1 = new StudentMark();
+                StudentMark mark2 = new StudentMark();
+                mark1.setMark(resultSet.getInt("mark"));
+                LOGGER.debug("first mark retrieved");
+                resultSet.next();
+                mark2.setMark(resultSet.getInt("mark"));
+                LOGGER.debug("second mark retrieved");
+                List<StudentMark> marks = new ArrayList<>();
+                marks.add(mark1);
+                marks.add(mark2);
+                user.setMarks(marks);
+                list.add(user);
+            }
+            return list;
+        } catch (
+                SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+
+        }
+
+    }
+
+    @Override
+    public void setStatus(Integer id, int status) {
+        try (PreparedStatement statement = connection.prepareStatement(STUDENT_SET_STATUS)) {
+            statement.setInt(1, status);
+            statement.setInt(2, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            LOGGER.error(e.toString());
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public User create(User user) {
         try (PreparedStatement statement = connection.prepareStatement(CREATE_WITH_ROLE, Statement.RETURN_GENERATED_KEYS)) {
             fillStatment(user, statement);
             statement.setBytes(10, user.getDiplomImage());
+            statement.setInt(11, user.getStatus());
             statement.execute();
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
@@ -300,9 +346,15 @@ public class UserDaoImpl implements UserDao {
     }
 
     private User getUser(ResultSet resultSet) throws SQLException {
+
+        User user = getUserSimple(resultSet);
+        user.setRoles(Collections.singleton(Role.valueOf(resultSet.getString("role"))));
+        return user;
+    }
+
+    private User getUserSimple(ResultSet resultSet) throws SQLException {
         User user = new User(resultSet.getString("email"));
         user.setId(resultSet.getInt("id"));
-        user.setRoles(Collections.singleton(Role.valueOf(resultSet.getString("role"))));
         user.setPassword(resultSet.getString("password"));
         user.setFirstName(resultSet.getString("first_name"));
         user.setLastName(resultSet.getString("last_name"));
@@ -312,8 +364,8 @@ public class UserDaoImpl implements UserDao {
         user.setSchoolName(resultSet.getString("school_name"));
         user.setDiplomImage(resultSet.getBytes("diplom_image"));
         user.setEnabled(resultSet.getBoolean("enabled"));
+        user.setStatus(resultSet.getInt("status"));
         LOGGER.debug("getting user: " + user);
         return user;
     }
-
 }

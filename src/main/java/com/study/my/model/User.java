@@ -30,7 +30,7 @@ public class User {
 
     private Faculty faculty;
 
-//    private List<StudentMark> marks;
+    private List<StudentMark> marks;
 
     private List<Faculty> faculties;
 
@@ -38,8 +38,11 @@ public class User {
 
     private Set<Role> roles;
 
+    private int status;
+
     public User(String email) {
         this.email = email;
+        status = 0;
     }
 
     public User(Integer id, String email, String password, String firstName, String lastName, String patronymic, String city, String region, String schoolName, Faculty faculty, byte[] diplomImage, boolean enabled, List<Faculty> faculties) {
@@ -56,7 +59,9 @@ public class User {
         this.diplomImage = diplomImage;
         this.enabled = enabled;
         this.faculties = faculties;
+        status = 0;
     }
+
 
     public Integer getId() {
         return id;
@@ -154,6 +159,14 @@ public class User {
         this.roles = roles;
     }
 
+    public List<StudentMark> getMarks() {
+        return marks;
+    }
+
+    public void setMarks(List<StudentMark> marks) {
+        this.marks = marks;
+    }
+
     public String getFullName() {
         return lastName + " " + firstName + " " + patronymic;
     }
@@ -182,6 +195,14 @@ public class User {
         this.faculty = faculty;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
     public static UserBuilder builder() {
         return new UserBuilder();
     }
@@ -199,7 +220,7 @@ public class User {
         private String schoolName;
         private Diploma diploma;
         private boolean enabled;
-        //        private List<StudentMark> marks;
+        private List<StudentMark> marks;
         private List<Faculty> faculties;
         private byte[] diplomImage;
         private Set<Role> roles;
@@ -262,11 +283,11 @@ public class User {
             return this;
         }
 
-        //        public UserBuilder marks(List<StudentMark> marks) {
-//            this.marks = marks;
-//            return this;
-//        }
-//
+        public UserBuilder marks(List<StudentMark> marks) {
+            this.marks = marks;
+            return this;
+        }
+
         public UserBuilder faculties(List<Faculty> faculties) {
             this.faculties = faculties;
             return this;

@@ -47,6 +47,7 @@ public class Servlet extends HttpServlet {
         commands.put("admin/faculty/save", new SaveFacultyCommand(facultyService));
         commands.put("admin/faculty/delete", new DeleteFacultyCommand(facultyService));
         commands.put("admin/addtoreport", new AddToReportCommand(userService, facultyService));
+        commands.put("admin/faculty/finalize", new FinalizeCommand(userService, facultyService));
 
     }
 
