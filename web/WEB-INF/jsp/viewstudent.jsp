@@ -45,7 +45,43 @@
     </nav>
 </div>
 
+
 <div class="container-fluid" style="margin-top: 20px">
+
+    <c:if test="${student.status==1}">
+        <div class="col-md-10 col-md-offset-1 alert alert-success">
+            <span><fmt:message key="student.accepted.budget"/></span>
+            <c:if test="${sessionScope.lang=='ua'}">
+                ${student.faculty.nameUa}
+            </c:if>
+            <c:if test="${sessionScope.lang!='ua'}">
+                ${student.faculty.nameEn}
+            </c:if>
+        </div>
+    </c:if>
+    <c:if test="${student.status==2}">
+        <div class="col-md-10 col-md-offset-1 alert alert-success">
+            <span><fmt:message key="student.accepted.contract"/></span>
+            <c:if test="${sessionScope.lang=='ua'}">
+                ${student.faculty.nameUa}
+            </c:if>
+            <c:if test="${sessionScope.lang!='ua'}">
+                ${student.faculty.nameEn}
+            </c:if>
+        </div>
+    </c:if>
+    <c:if test="${student.status==3}">
+        <div class="col-md-10 col-md-offset-1 alert alert-danger">
+            <span><fmt:message key="student.failed"/></span>
+            <c:if test="${sessionScope.lang=='ua'}">
+                ${student.faculty.nameUa}
+            </c:if>
+            <c:if test="${sessionScope.lang!='ua'}">
+                ${student.faculty.nameEn}
+            </c:if>
+        </div>
+    </c:if>
+
     <div class="row">
         <div class="col-sm-1 col-md-offset-10">
             <form action="${pageContext.request.contextPath}/command/admin/student/changeactive?id=${student.id}"

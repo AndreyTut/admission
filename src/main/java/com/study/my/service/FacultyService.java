@@ -9,7 +9,6 @@ import com.study.my.model.Subject;
 import com.study.my.model.User;
 import org.apache.log4j.Logger;
 
-import java.util.Collections;
 import java.util.List;
 
 public class FacultyService {
@@ -74,7 +73,8 @@ public class FacultyService {
         LOGGER.debug("subject 2: " + faculty.getSubjects().get(1));
         int sub2Id = faculty.getSubjects().get(1).getId();
         List<User> students = userDao.findByFaculty(id, sub1Id, sub2Id);
-        students.sort((s1, s2) -> (s2.getMarks().get(0).getMark() + s2.getMarks().get(1).getMark()) - (s1.getMarks().get(0).getMark() + s1.getMarks().get(1).getMark()));
+        students.sort((s1, s2) -> (s2.getMarks().get(0).getMark() + s2.getMarks().get(1).getMark())
+                                - (s1.getMarks().get(0).getMark() + s1.getMarks().get(1).getMark()));
         for (int i = 0; i < faculty.getVacancyBudge(); i++) {
             if (i >= students.size()) {
                 break;
@@ -94,7 +94,7 @@ public class FacultyService {
 
         for (User student : students) {
             userDao.setStatus(student.getId(), student.getStatus());
-            LOGGER.debug(student + " marks " + student.getMarks().get(0).getMark() + " " + student.getMarks().get(1).getMark());
+            LOGGER.debug(student.getEmail() + " marks " + student.getMarks().get(0).getMark() + " " + student.getMarks().get(1).getMark());
         }
         return true;
     }
