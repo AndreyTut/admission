@@ -1,6 +1,6 @@
 ## Final project(Servlets)
 #### Тема: "Приемная комиссия"
-Скрипт инициализации и наполнения БД в файле sql/init_db.sq в корне проекта  
+Скрипт инициализации и наполнения БД в файле sql/init_db.sql в корне проекта  
 ---
 Параметры подключения к БД:  
 db.url=jdbc:postgresql://localhost:5432/univer_admission
