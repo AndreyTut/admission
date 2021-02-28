@@ -34,11 +34,21 @@
             </div>
 
             <div class="col-md-1 col-md-offset-4 navbar-brand">
-                <a href="?id=${faculty.id}&lang=ua">Українська</a>
+                <c:if test="${faculty.id==null}">
+                    <a href="?lang=ua">Українська</a>
+                </c:if>
+                <c:if test="${faculty.id!=null}">
+                    <a href="?id=${faculty.id}&lang=ua">Українська</a>
+                </c:if>
             </div>
 
             <div class="col-md-1 navbar-brand">
-                <a href="?id=${faculty.id}&lang=en">English</a>
+                <c:if test="${faculty.id==null}">
+                    <a href="?lang=en">English</a>
+                </c:if>
+                <c:if test="${faculty.id!=null}">
+                    <a href="?id=${faculty.id}&lang=en">English</a>
+                </c:if>
             </div>
 
         </div>
@@ -116,9 +126,10 @@
                                 <div class="form-group">
                                     <select name="subj1" class="form-control">
                                         <c:forEach var="subject" items="${subjects}">
-                                        <option ${faculty.subjects[0].id==subject.id?'selected="selected"':''} value="${subject.id}">
-                                                ${subject.nameUa}
-                                        </option>
+                                            <option ${faculty.subjects[0].id==subject.id?'selected="selected"':''}
+                                                    value="${subject.id}">
+                                                    ${subject.nameUa}
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -128,9 +139,10 @@
                                 <div class="form-group">
                                     <select name="subj2" class="form-control">
                                         <c:forEach var="subject" items="${subjects}">
-                                        <option ${faculty.subjects[1].id==subject.id?'selected="selected"':''} value="${subject.id}">
-                                                ${subject.nameUa}
-                                        </option>
+                                            <option ${faculty.subjects[1].id==subject.id?'selected="selected"':''}
+                                                    value="${subject.id}">
+                                                    ${subject.nameUa}
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -144,7 +156,8 @@
                                 <div class="form-group">
                                     <select name="subj1" class="form-control">
                                         <c:forEach var="subject" items="${subjects}">
-                                            <option ${faculty.subjects[0].id==subject.id?'selected="selected"':''} value="${subject.id}">
+                                            <option ${faculty.subjects[0].id==subject.id?'selected="selected"':''}
+                                                    value="${subject.id}">
                                                     ${subject.nameEn}
                                             </option>
                                         </c:forEach>
@@ -156,7 +169,8 @@
                                 <div class="form-group">
                                     <select name="subj2" class="form-control">
                                         <c:forEach var="subject" items="${subjects}">
-                                            <option ${faculty.subjects[1].id==subject.id?'selected="selected"':''} value="${subject.id}">
+                                            <option ${faculty.subjects[1].id==subject.id?'selected="selected"':''}
+                                                    value="${subject.id}">
                                                     ${subject.nameEn}
                                             </option>
                                         </c:forEach>
