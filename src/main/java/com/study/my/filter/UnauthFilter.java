@@ -16,7 +16,8 @@ public class UnauthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         if (request.getSession().getAttribute("user") != null) {
-            request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
+            request.setAttribute("errormessage", "Only unauthorized users permitted");
+            request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(request, response);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }

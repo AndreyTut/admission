@@ -40,7 +40,7 @@ public class SubjectDaoImpl implements SubjectDao {
             return result;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -76,17 +76,13 @@ public class SubjectDaoImpl implements SubjectDao {
         return false;
     }
 
-    @Override
-    public void delete(int id) {
-
-    }
 
     @Override
     public void close() {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 

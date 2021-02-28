@@ -10,4 +10,6 @@ public interface FacultyDao extends GenericDao<Faculty> {
     Faculty getOneForUser(int userId);
 
     void finalizeFaculty(int id);
+
+    void delete(int id);
 }

@@ -30,7 +30,7 @@ public class UserDaoImpl implements UserDao {
             return Optional.ofNullable(getUserFromResultSet(resultSet));
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
             return Optional.ofNullable(getUserFromResultSet(resultSet));
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class UserDaoImpl implements UserDao {
             return user;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -85,7 +85,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
         return null;
     }
@@ -99,7 +99,7 @@ public class UserDaoImpl implements UserDao {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -118,7 +118,7 @@ public class UserDaoImpl implements UserDao {
             return new StudentMark();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -130,7 +130,7 @@ public class UserDaoImpl implements UserDao {
             statement.execute();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -143,7 +143,7 @@ public class UserDaoImpl implements UserDao {
             statement.execute();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -154,7 +154,7 @@ public class UserDaoImpl implements UserDao {
             statement.setInt(2, markId);
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -166,7 +166,7 @@ public class UserDaoImpl implements UserDao {
             return (statement.executeQuery()).next();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -209,8 +209,7 @@ public class UserDaoImpl implements UserDao {
         } catch (
                 SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
-
+            throw new RuntimeException("Database connection error", e);
         }
 
     }
@@ -223,7 +222,7 @@ public class UserDaoImpl implements UserDao {
             statement.executeUpdate();
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -243,7 +242,7 @@ public class UserDaoImpl implements UserDao {
             }
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
         return null;
     }
@@ -256,7 +255,7 @@ public class UserDaoImpl implements UserDao {
             return getUserFromResultSet(resultSet);
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -273,7 +272,7 @@ public class UserDaoImpl implements UserDao {
             return users;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -285,13 +284,8 @@ public class UserDaoImpl implements UserDao {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
-    }
-
-    @Override
-    public void delete(int id) {
-
     }
 
     @Override
@@ -299,7 +293,7 @@ public class UserDaoImpl implements UserDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 

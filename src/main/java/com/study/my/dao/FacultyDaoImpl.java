@@ -32,7 +32,7 @@ public class FacultyDaoImpl implements FacultyDao {
             }
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
         return null;
     }
@@ -55,7 +55,7 @@ public class FacultyDaoImpl implements FacultyDao {
             }
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
         return null;
     }
@@ -78,7 +78,7 @@ public class FacultyDaoImpl implements FacultyDao {
             return faculties;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -90,7 +90,7 @@ public class FacultyDaoImpl implements FacultyDao {
             return preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 
@@ -117,10 +117,10 @@ public class FacultyDaoImpl implements FacultyDao {
                 connection.rollback();
             } catch (SQLException e1) {
                 LOGGER.error(e.toString());
-                throw new RuntimeException(e);
+                throw new RuntimeException("Database connection error", e);
             }
             LOGGER.error(e.toString());
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
 
     }

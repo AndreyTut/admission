@@ -63,8 +63,7 @@ public class UserService {
 
     public User getByEmail(String email) {
         Optional<User> userOptional = userDao.findByEmail(email);
-        //TODO Change with custom exception
-        return userOptional.orElseThrow(RuntimeException::new);
+        return userOptional.orElseThrow(()-> new RuntimeException("User not found"));
     }
 
     public boolean setEnabled(int id, boolean enabled) {
@@ -72,9 +71,7 @@ public class UserService {
     }
 
     public StudentMark getStudentMark(Integer subjId, Integer userId) {
-//        User student = userDao.findById(userId);
         StudentMark mark = userDao.getMark(subjId, userId);
-//        mark.setUser(student);
         return mark;
     }
 

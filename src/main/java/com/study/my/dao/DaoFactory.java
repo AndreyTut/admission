@@ -1,11 +1,13 @@
 package com.study.my.dao;
 
+import org.apache.log4j.Logger;
+
 import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DaoFactory extends AbstractDaoFactory {
-
+    private static Logger LOGGER = Logger.getLogger(DiplomaDao.class);
     private DataSource dataSource = ConnectionPoolHolder.getDataSource();
 
     @Override
@@ -33,8 +35,8 @@ public class DaoFactory extends AbstractDaoFactory {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            LOGGER.error(e.toString());
+            throw new RuntimeException("Database connection error", e);
         }
     }
 }

@@ -32,6 +32,7 @@ public abstract class AbstractAuthFilter implements Filter {
         }
         Set<Role> roles = user.getRoles();
         if (!predicate.test(roles)) {
+            request.setAttribute("errormessage", "Forbidden for your role");
             request.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(servletRequest, servletResponse);
         }
         filterChain.doFilter(servletRequest, servletResponse);

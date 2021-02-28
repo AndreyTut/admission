@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.List;
 
 import static com.study.my.util.Constants.CREATE_DIPLOMA;
 import static com.study.my.util.Constants.UPDATE_DIPLOMA;
@@ -29,20 +28,10 @@ public class DiplomaDaoImpl implements DiplomaDao {
             return diploma;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            //TODO change om custom exception
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database error", e);
         }
     }
 
-    @Override
-    public Diploma findById(int id) {
-        return null;
-    }
-
-    @Override
-    public List<Diploma> findAll() {
-        return null;
-    }
 
     @Override
     public boolean update(Diploma diploma) {
@@ -52,14 +41,8 @@ public class DiplomaDaoImpl implements DiplomaDao {
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             LOGGER.error(e.toString());
-            //TODO change om custom exception
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
-    }
-
-    @Override
-    public void delete(int id) {
-
     }
 
     @Override
@@ -67,7 +50,7 @@ public class DiplomaDaoImpl implements DiplomaDao {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Database connection error", e);
         }
     }
 

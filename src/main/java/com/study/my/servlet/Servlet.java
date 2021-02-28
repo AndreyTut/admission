@@ -54,13 +54,23 @@ public class Servlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
         LOGGER.debug("Servlet process get request " + httpServletRequest.getRequestURI());
-
-        processRequest(httpServletRequest, httpServletResponse);
+        catchExceptions(httpServletRequest, httpServletResponse);
     }
+
 
     @Override
     protected void doPost(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
-        processRequest(httpServletRequest, httpServletResponse);
+        catchExceptions(httpServletRequest, httpServletResponse);
+    }
+
+    private void catchExceptions(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws ServletException, IOException {
+        try {
+            processRequest(httpServletRequest, httpServletResponse);
+        } catch (Exception e) {
+            String message = e.getMessage();
+            httpServletRequest.setAttribute("errormessage", message);
+            httpServletRequest.getRequestDispatcher("error.jsp").forward(httpServletRequest, httpServletResponse);
+        }
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response)
