@@ -35,7 +35,7 @@ public class Constants {
             "last_name, patronymic, city, region, school_name, enabled, diplom_image, status) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)" +
             "returning id) INSERT INTO user_role (user_id, role) VALUES((select id from new_user), 'ROLE_USER')";
 
-    public static final String GET_ALL_USERS_ROLES = "SELECT u.*, ur.role FROM user_db u LEFT JOIN user_role ur ON ur.user_id=u.id";
+    public static final String GET_ALL_USERS_ROLES = "SELECT u.*, ur.role FROM user_db u LEFT JOIN user_role ur ON ur.user_id=u.id ORDER BY u.last_name";
 
     public static final String GET_USER_WITH_DIPLOMA = "SELECT u.*, d.math, d.physics, d.history, d.literature, d.chemistry, d. biology, d.id as d_id, " +
             "ur.role FROM user_db u LEFT JOIN diploma d ON d.user_id=u.id " +

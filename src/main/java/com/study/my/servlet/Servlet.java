@@ -69,7 +69,7 @@ public class Servlet extends HttpServlet {
         } catch (Exception e) {
             String message = e.getMessage();
             httpServletRequest.setAttribute("errormessage", message);
-            httpServletRequest.getRequestDispatcher("error.jsp").forward(httpServletRequest, httpServletResponse);
+            httpServletRequest.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(httpServletRequest, httpServletResponse);
         }
     }
 
