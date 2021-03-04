@@ -34,7 +34,6 @@ public class Utils {
             }
         } catch (IOException | ServletException e) {
             e.printStackTrace();
-            //TODO process
             throw new RuntimeException(e);
         }
         return null;
